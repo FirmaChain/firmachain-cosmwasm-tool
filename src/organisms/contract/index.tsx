@@ -88,9 +88,18 @@ const Contract = () => {
         <Stack alignItems={"flex-end"}>
           <SmallButton title={"REGISTER"} active={active} onClick={onClickMnemonicRegister} />
         </Stack>
-        <Fragment>
-          <Deploy tab={tab} wallet={wallet} address={address} firmaSDK={firmaSDK} />
-        </Fragment>
+        <Accordion
+          paddingForExpandButton={false}
+          defaultExpended={false}
+          summary={
+            <Tabs value={tab} onChange={onChangeTab}>
+              {TABS.map((value, index) => {
+                return <Tab key={`deploy-tabs-${index}`} label={value} sx={{ fontSize: "0.8rem" }} {...tabProps(index)} />;
+              })}
+            </Tabs>
+          }
+          collapse={<Fragment>{mode === false ? <Deploy tab={tab} wallet={wallet} address={address} firmaSDK={firmaSDK} /> : <></>}</Fragment>}
+        />
       </Stack>
     </CustomCard>
   )

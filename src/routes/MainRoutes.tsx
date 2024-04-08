@@ -1,8 +1,9 @@
-import { Suspense, lazy } from "react";
+import { lazy } from "react";
 
 import MainLayout from "../layouts/mainLayout";
+import Loadable from "components/loading/loadable";
 
-const MainPage = lazy(() => import("../pages/mainPage"));
+const MainPage = Loadable(lazy(() => import("../pages/mainPage")));
 
 const MainRoutes = {
   path: "/",
@@ -10,11 +11,7 @@ const MainRoutes = {
   children: [
     {
       path: "/",
-      element: (
-        <Suspense fallback={<div>Loading...</div>}>
-          <MainPage />
-        </Suspense>
-      )
+      element: <MainPage />,
     },
   ],
 };
