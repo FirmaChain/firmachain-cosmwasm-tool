@@ -1,5 +1,5 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
-import { ILoadingState, ISnackbarState } from "intefaces/modal";
+import { ILoadingState, ISnackbarState } from "interfaces/modal";
 
 
 export interface IModalStateProps {

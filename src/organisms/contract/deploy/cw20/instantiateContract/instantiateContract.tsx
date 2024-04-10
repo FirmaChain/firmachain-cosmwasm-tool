@@ -3,8 +3,14 @@ import { Stack, Typography } from "@mui/material";
 import { FirmaSDK, FirmaUtil, FirmaWalletService } from "@firmachain/firma-js";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
-import Decimal from "./decimal";
+import Toast from "components/toast";
+import LoadingProgress from "components/loading/loadingProgress";
 import TableWithNoHeader from "components/table/tableWithNoHeader";
+import SmallButton from "components/button/smallButton";
+import LabelDisplay from "components/text/labelDisplay";
+import AmountDisplay from "components/text/amountDisplay";
+
+import Decimal from "./decimal";
 import InitialAddress from "./initialAddress";
 import TokenName from "./tokenName";
 import TokenSymbol from "./tokenSymbol";
@@ -16,11 +22,18 @@ import MarketingDesc from "./marketingDesc";
 import MarketingLogo from "./marketingLogo";
 import MarketingAddress from "./marketingAddress";
 import MarketingProject from "./marketingProject";
-import SmallButton from "components/button/smallButton";
 import CodeId from "./codeId";
 import Admin from "./admin";
+
+
+import { ContractActions, GlobalActions } from "store/action";
+import { adjustValueByDecimal, formatNumberWithComma } from "utils/number";
+import { useModal } from "hooks/useTxModal";
 import { shortenAddress } from "utils/address";
-import { adjustValueByDecimal } from "utils/number";
+
+import { useInstantiateContract } from "hooks/cw20/transaction";
+import { getInstantiateContract } from "organisms/feature/cw20/tx/instantiateContract";
+import { INSTANTIATE_LOADING, INSTANTIATE_SUCCESS } from "constants/message";
 
 interface IProps {
   firmaSDK: FirmaSDK;
@@ -44,6 +57,27 @@ const InstantiateContract = ({ firmaSDK, address, wallet }: IProps) => {
   const [marketingAddress, setMarketingAddress] = useState<string>("");
   const [marketingProject, setMarketingProject] = useState<string>("");
   const [funds, setFunds] = useState<Coin[]>([]);
+  
+  const { openModal, closeModal } = useModal();
+  
+  const { mutate } = useInstantiateContract(firmaSDK, wallet, admin, codeId, label, funds, {
+    onMutate: () => {
+      LoadingProgress({ enable: true, message: INSTANTIATE_LOADING });
+    },
+    onSuccess: (data: any) => {
+      Toast({ message: INSTANTIATE_SUCCESS, variant: "success" });
+      ContractActions.handleCw20ContractAddress(data);
+      ContractActions.handleCw20Decimal(decimal);
+    },
+    onError: (error: any) => {
+      Toast({ message: String(new Error(error.message)), variant: "error" });
+    },
+    onSettled: () => {
+      LoadingProgress({ enable: false });
+      GlobalActions.handleRefetch("Cw20");
+      closeModal();
+    }
+  });
 
   const checkAdmin = useMemo(() => {
     return admin === "" ? true : FirmaUtil.isValidAddress(admin);
@@ -80,6 +114,58 @@ const InstantiateContract = ({ firmaSDK, address, wallet }: IProps) => {
   const handleMarketingAddress = (value: string) => { setMarketingAddress(value); }
   const handleMarketingProject = (value: string) => { setMarketingProject(value); }
 
+  const onClickInstantiateContract = async () => {
+    try {
+      const balance = await firmaSDK.Bank.getBalance(address);
+      const initial_balances = initialAddress.split(',').map((address, index) => ({
+        address,
+        amount: adjustValueByDecimal(initialBalance.split(',')[index], decimal)
+      }));
+  
+      const hasMarketingInfo = marketingDesc !== "" && marketingLogo !== "" && marketingAddress !== "" && marketingProject !== "";
+      const hasMinterInfo = minterAddress !== "" && minterCap !== 0;
+  
+      const messageDataObj = {
+        decimals: Number(decimal),
+        name: tokenName,
+        symbol: tokenSymbol,
+        initial_balances: initial_balances,
+        ...(hasMinterInfo && {
+          mint: {
+            minter: minterAddress,
+            cap: adjustValueByDecimal(minterCap, decimal)
+          }
+        }),
+        ...(hasMarketingInfo && {
+          marketing: {
+            description: marketingDesc,
+            logo: { url: marketingLogo },
+            marketing: marketingAddress,
+            project: marketingProject
+          }
+        })
+      };
+  
+      const message = JSON.stringify(messageDataObj);
+      const fee = await getInstantiateContract({ firmaSDK, wallet, admin, codeId, label, message, funds });
+
+      openModal(
+        <Fragment>
+          <Stack gap={"10px"}>
+            <LabelDisplay label={"Type (Trx.)"} value={"Instantiate"} />
+            <LabelDisplay label={"My Address"} value={shortenAddress(address)} />
+            <AmountDisplay label={"My Fct"} amount={formatNumberWithComma(balance, 6)} symbol={"FCT"} />
+            <AmountDisplay label={"Fee"} amount={formatNumberWithComma(fee.toString(), 6)} symbol={"FCT"} />
+          </Stack>
+        </Fragment>,
+        onClickConfirm,
+        onClickCancel
+      );
+    } catch (error) {
+      Toast({ message: String(new Error(error.message)), variant: "error" });
+    }
+  };
+
   const onClickConfirm = () => {
     const initial_balances = initialAddress.split(',').map((address, index) => ({
       address,
@@ -111,10 +197,12 @@ const InstantiateContract = ({ firmaSDK, address, wallet }: IProps) => {
     };
     
     const message = JSON.stringify(messageDataObj);
+    mutate(message);
   }
 
   const onClickCancel = () => {
     console.log("close modal");
+    closeModal();
   };
 
   return (
@@ -143,7 +231,7 @@ const InstantiateContract = ({ firmaSDK, address, wallet }: IProps) => {
         }
       />
       <Stack alignItems={"flex-end"}>
-        <SmallButton title={"Instantiate"} active={active} onClick={onClickConfirm} />
+        <SmallButton title={"Instantiate"} active={active} onClick={onClickInstantiateContract} />
       </Stack>
     </Stack>
   );

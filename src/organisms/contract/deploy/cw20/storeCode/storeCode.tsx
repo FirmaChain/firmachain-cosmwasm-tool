@@ -2,11 +2,15 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { FirmaSDK, FirmaWalletService } from "@firmachain/firma-js"
 import { Stack, Typography } from "@mui/material";
 
+import { useStoreCode } from "hooks/cw20/transaction";
+import LoadingProgress from "components/loading/loadingProgress";
+import { STORE_CODE_LOADING, STORE_CODE_SUCCESS } from "constants/message";
+import Toast from "components/toast";
 import SmallButton from "components/button/smallButton";
 import TableWithNoHeader from "components/table/tableWithNoHeader";
 import CompFile from "./compFile";
 import AccessType from "./accessType";
-import { STORE_CODE_LOADING } from "constants/message";
+import { ContractActions, GlobalActions } from "store/action";
 
 export enum ACCESS_TYPES {
   /** ACCESS_TYPE_UNSPECIFIED - AccessTypeUnspecified placeholder for empty value */
@@ -30,6 +34,28 @@ const StoreCode = ({ firmaSDK, wallet }: IProps) => {
   const [bufferArray, setBufferArray] = useState<Uint8Array | null>(null);
   const [selectedAccessType, setSelectedAccessType] = useState<number>(ACCESS_TYPES.ACCESS_TYPE_UNSPECIFIED);
 
+  const { mutate, isLoading } = useStoreCode(firmaSDK, wallet, bufferArray, { permission: selectedAccessType, address: "" }, {
+    onMutate: () => {
+      LoadingProgress({ enable: true, message: STORE_CODE_LOADING });
+    },
+    onSuccess: (data: any) => {
+      ContractActions.handleCw20CodeId(data);
+      Toast({ message: STORE_CODE_SUCCESS, variant: "success" });
+      setFile("");
+    },
+    onError: (error: any) => {
+      Toast({ message: String(new Error(error.message)), variant: "error" });
+    },
+    onSettled: () => {
+      LoadingProgress({ enable: false });
+      GlobalActions.handleRefetch("Cw20");
+    }
+  });
+
+  useEffect(() => {
+    LoadingProgress({ enable: isLoading, message: isLoading ? STORE_CODE_LOADING : undefined });
+  }, [isLoading]);
+
   useEffect(() => {
     if (file !== null) {
       const wasmArray = new Uint8Array(file as ArrayBuffer);
@@ -50,6 +76,7 @@ const StoreCode = ({ firmaSDK, wallet }: IProps) => {
   };
 
   const onClickStoreCode = () => {
+    mutate(null);
   }
 
   return (
