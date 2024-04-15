@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Expires, FirmaSDK, FirmaUtil, FirmaWalletService } from "@firmachain/firma-js";
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 
 import SmallButton from "components/button/smallButton";
 import TextInput from "components/input/textInput";
@@ -9,18 +9,21 @@ import CustomRadioGroup from "components/radio/customRadio";
 import CustomRow from "components/table/row/customRow";
 import { useIncreaseAllowance } from "hooks/cw20/transaction";
 import LoadingProgress from "components/loading/loadingProgress";
-import Toast from "components/toast";
-
-import { INCREASE_ALLOWANCE_LOADING, INCREASE_ALLOWANCE_SUCCESS } from "constants/message";
-import { GlobalActions } from "store/action";
-import { adjustValueByDecimal, formatNumberWithComma } from "utils/number";
-import { rootState } from "store/reducers";
-import DatePicker from "components/input/datePicker";
-import { getIncreaseAllowance } from "../tx/increaseAllowance";
-import { useModal } from "hooks/useTxModal";
 import LabelDisplay from "components/text/labelDisplay";
 import AmountDisplay from "components/text/amountDisplay";
+import DatePicker from "components/input/datePicker";
+import Toast from "components/toast";
+
+import { GlobalActions } from "store/action";
+import { rootState } from "store/reducers";
+import { useModal } from "hooks/useTxModal";
+
+import { getIncreaseAllowance } from "../tx/increaseAllowance";
+
+import { adjustValueByDecimal, formatNumberWithComma } from "utils/number";
 import { shortenAddress } from "utils/address";
+
+import { INCREASE_ALLOWANCE_LOADING, INCREASE_ALLOWANCE_SUCCESS } from "constants/message";
 
 interface IProps {
   firmaSDK: FirmaSDK;

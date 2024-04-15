@@ -119,3 +119,108 @@ export interface IUpdateLogo {
   contractAddress: string;
   url: string;
 };
+
+export interface IGetCw20ContractInfo {
+  firmaSDK: FirmaSDK;
+  contractAddress: string;
+  ownerAddress: string;
+};
+
+export interface ICw20ContractInfo {
+  tokenInfo: ICw20TokenInfo;
+  minter: IMinter;
+  balance: string;
+  marketingInfo: IMarketing;
+  allAllowances: IAllowance[];
+};
+
+export interface ICw20TokenInfo {
+  name: string;
+  symbol: string;
+  decimals: number;
+  total_supply: string;
+};
+
+interface IMinter {
+  minter: string;
+  cap: string;
+};
+
+interface IMarketing {
+  project: string;
+  description: string;
+  logo: IMarketingLogo;
+  marketing: string;
+};
+
+interface IMarketingLogo {
+  url: string;
+};
+
+export interface IAllowance {
+  allowance: string;
+  expires: Expires;
+  spender: string;
+};
+
+export interface IGetCw20AddressInfo {
+  firmaSDK: FirmaSDK;
+  contractAddress: string;
+  address: string;
+};
+
+export interface IGetBalance {
+  firmaSDK: FirmaSDK;
+  contractAddress: string;
+  address: string;
+};
+
+export interface IGetTotalSupply {
+  firmaSDK: FirmaSDK;
+  contractAddress: string;
+};
+
+export interface IGetMinter {
+  firmaSDK: FirmaSDK;
+  contractAddress: string;
+};
+
+export interface IGetAllowance {
+  firmaSDK: FirmaSDK;
+  contractAddress: string;
+  owner: string;
+  spender: string;
+};
+
+export interface IGetAllAllowances {
+  firmaSDK: FirmaSDK;
+  contractAddress: string;
+  owner: string;
+};
+
+export interface IGetAllSpenderAllowances {
+  firmaSDK: FirmaSDK;
+  contractAddress: string;
+  spender: string;
+};
+
+export interface IGetAllAccounts {
+  firmaSDK: FirmaSDK;
+  contractAddress: string;
+};
+
+export interface IGetMarketingInfo {
+  firmaSDK: FirmaSDK;
+  contractAddress: string;
+};
+
+export interface IGetDownloadLogo {
+  firmaSDK: FirmaSDK;
+  contractAddress: string;
+};
+
+export interface ICw20AddressInfo {
+  balance: string;
+  allAllowances: IAllowance[];
+  allSpenderAllowances: IAllowance[];
+};
