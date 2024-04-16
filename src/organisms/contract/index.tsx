@@ -16,6 +16,7 @@ import { TABS } from "constants/common";
 import { getKeyType } from "utils/address";
 
 import Deploy from "./deploy";
+import Recover from "./recover";
 
 const tabProps = (tabIndex: number) => {
   return {
@@ -98,7 +99,7 @@ const Contract = () => {
               })}
             </Tabs>
           }
-          collapse={<Fragment>{mode === false ? <Deploy tab={tab} wallet={wallet} address={address} firmaSDK={firmaSDK} /> : <></>}</Fragment>}
+          collapse={<Fragment>{mode === false ? <Deploy tab={tab} wallet={wallet} address={address} firmaSDK={firmaSDK} /> : <Recover tab={tab} />}</Fragment>}
         />
       </Stack>
     </CustomCard>
