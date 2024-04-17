@@ -1,4 +1,4 @@
-export const TABS = ["Cw20", ] as const;
+export const TABS = ["Cw20", "Cw721", ] as const;
 export type TAB_TYPE = typeof TABS[number];
 
 export const NETWORKS = ["MAINNET", "TESTNET"] as const;
