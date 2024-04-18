@@ -8,9 +8,11 @@ import { rootState } from "store/reducers";
 import useFirmaSDK from "hooks/useFirmaSDK";
 
 import Info from "./info/info";
-import DashboardCw20 from "./cw20";
-
 import { TABS } from "constants/common";
+
+import DashboardCw20 from "./cw20";
+import DashboardCw721 from "./cw721";
+
 
 const Dashboard = () => {
   const { address } = useFirmaSDK();
@@ -47,6 +49,9 @@ const Dashboard = () => {
           </Tabs>
           <Box sx={{ display: tab === 0 ? "block" : "none" }}>
             <DashboardCw20 />
+          </Box>
+          <Box sx={{ display: tab === 1 ? "block" : "none" }}>
+            <DashboardCw721 />
           </Box>
         </Stack>
       </MainCard>

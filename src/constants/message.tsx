@@ -59,3 +59,35 @@ export const UPDATE_MARKETING_FAILED = "Marketing update failed";
 export const UPDATE_LOGO_LOADING = "UpdateLogo is in progress";
 export const UPDATE_LOGO_SUCCESS = "Logo update has been completed";
 export const UPDATE_LOGO_FAILED = "Logo update failed";
+
+export const APPROVE_LOADING = "Approval is in progress";
+export const APPROVE_SUCCESS = "Approval has been completed";
+export const APPROVE_FAILED = "Approval failed";
+
+export const REVOKE_LOADING = "Revocation is in progress";
+export const REVOKE_SUCCESS = "Revocation has been completed";
+export const REVOKE_FAILED = "Revocation failed";
+
+export const APPROVE_ALL_LOADING = "ApproveAll is in progress";
+export const APPROVE_ALL_SUCCESS = "ApproveAll has been completed";
+export const APPROVE_ALL_FAILED = "ApproveAll failed";
+
+export const REVOKE_ALL_LOADING = "RevokeAll is in progress";
+export const REVOKE_ALL_SUCCESS = "RevokeAll has been completed";
+export const REVOKE_ALL_FAILED = "RevokeAll failed";
+
+export const UPDATE_OWNERSHIP_TRANSFER_LOADING = "Ownership transfer update is in progress";
+export const UPDATE_OWNERSHIP_TRANSFER_SUCCESS = "Ownership transfer update has been completed";
+export const UPDATE_OWNERSHIP_TRANSFER_FAILED = "Ownership transfer update failed";
+
+export const UPDATE_OWNERSHIP_ACCEPT_LOADING = "Ownership acceptance update is in progress";
+export const UPDATE_OWNERSHIP_ACCEPT_SUCCESS = "Ownership acceptance update has been completed";
+export const UPDATE_OWNERSHIP_ACCEPT_FAILED = "Ownership acceptance update failed";
+
+export const UPDATE_OWNERSHIP_RENOUNCE_LOADING = "Ownership renouncement update is in progress";
+export const UPDATE_OWNERSHIP_RENOUNCE_SUCCESS = "Ownership renouncement update has been completed";
+export const UPDATE_OWNERSHIP_RENOUNCE_FAILED = "Ownership renouncement update failed";
+
+export const SEND_NFT_LOADING = "Sending NFT is in progress";
+export const SEND_NFT_SUCCESS = "NFT send has been completed";
+export const SEND_NFT_FAILED = "Sending NFT failed";
