@@ -224,3 +224,60 @@ export interface ICw20AddressInfo {
   allAllowances: IAllowance[];
   allSpenderAllowances: IAllowance[];
 };
+
+// BULK
+export interface ITransferBulk {
+  firmaSDK: FirmaSDK;
+  wallet: FirmaWalletService;
+  contractAddress: string;
+  transferBulkTargets: ITransferBulkTarget[];
+};
+
+export interface ITransferBulkTarget {
+  recipient: string;
+  amount: string;
+};
+
+export interface ITransferFromBulk {
+  firmaSDK: FirmaSDK;
+  wallet: FirmaWalletService;
+  contractAddress: string;
+  transferFromBulkTargets: ITransferFromBulkTarget[];
+};
+
+export interface ITransferFromBulkTarget {
+  owner: string;
+  recipient: string;
+  amount: string;
+};
+
+export interface IBurnBulk {
+  firmaSDK: FirmaSDK;
+  wallet: FirmaWalletService;
+  contractAddress: string;
+  amountArray: string[];
+};
+
+export interface IBurnFromBulk {
+  firmaSDK: FirmaSDK;
+  wallet: FirmaWalletService;
+  contractAddress: string;
+  burnFromBulkTargets: IBurnFromBulkTarget[];
+};
+
+export interface IBurnFromBulkTarget {
+  owner: string;
+  amount: string;
+};
+
+export interface IMintBulk {
+  firmaSDK: FirmaSDK;
+  wallet: FirmaWalletService;
+  contractAddress: string;
+  mintBulkTargets: IMintBulkTarget[];
+};
+
+export interface IMintBulkTarget {
+  recipient: string;
+  amount: string;
+};

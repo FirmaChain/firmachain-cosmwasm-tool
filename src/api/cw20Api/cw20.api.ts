@@ -1,4 +1,9 @@
-import { IBurn, IBurnFrom, ICw20TokenInfo, IDecreaseAllowance, IGetAllAccounts, IGetAllAllowances, IGetAllSpenderAllowances, IGetAllowance, IGetBalance, IGetCw20AddressInfo, IGetCw20ContractInfo, IGetDownloadLogo, IGetMarketingInfo, IGetMinter, IGetTotalSupply, IIncreaseAllowance, IInstantiateContract, IMint, ISend, ISendFrom, IStoreCode, ITransfer, ITransferFrom, IUpdateLogo, IUpdateMarketing, IUpdateMinter } from "interfaces/cw20";
+import { IBurn, IBurnBulk, IBurnFrom, IBurnFromBulk, ICw20TokenInfo, IDecreaseAllowance, IGetAllAccounts, IGetAllAllowances, IGetAllSpenderAllowances, IGetAllowance, IGetBalance, IGetCw20AddressInfo, IGetCw20ContractInfo, IGetDownloadLogo, IGetMarketingInfo, IGetMinter, IGetTotalSupply, IIncreaseAllowance, IInstantiateContract, IMint, IMintBulk, ISend, ISendFrom, IStoreCode, ITransfer, ITransferBulk, ITransferFrom, ITransferFromBulk, IUpdateLogo, IUpdateMarketing, IUpdateMinter } from "interfaces/cw20";
+import { BurnBulk } from "organisms/bulk/cw20/tx/burnBulk";
+import { BurnFromBulk } from "organisms/bulk/cw20/tx/burnFromBulk";
+import { MintBulk } from "organisms/bulk/cw20/tx/mintBulk";
+import { TransferBulk } from "organisms/bulk/cw20/tx/transferBulk";
+import { TransferFromBulk } from "organisms/bulk/cw20/tx/transferFromBulk";
 import { Burn } from "organisms/feature/cw20/tx/burn";
 import { BurnFrom } from "organisms/feature/cw20/tx/burnFrom";
 import { DecreaseAllowance } from "organisms/feature/cw20/tx/decreaseAllowance";
@@ -237,4 +242,25 @@ export const getDownloadLogo = ({ firmaSDK, contractAddress }: IGetDownloadLogo)
     }
   }
   return executeQuery();
-}
+};
+
+// BULK TX
+export const transferBulk = ({ firmaSDK, wallet, contractAddress, transferBulkTargets }: ITransferBulk) => {
+  return TransferBulk({ firmaSDK, wallet, contractAddress, transferBulkTargets });
+};
+
+export const transferFromBulk = ({ firmaSDK, wallet, contractAddress, transferFromBulkTargets }: ITransferFromBulk) => {
+  return TransferFromBulk({ firmaSDK, wallet, contractAddress, transferFromBulkTargets });
+};
+
+export const burnBulk = ({ firmaSDK, wallet, contractAddress, amountArray }: IBurnBulk) => {
+  return BurnBulk({ firmaSDK, wallet, contractAddress, amountArray });
+};
+
+export const burnFromBulk = ({ firmaSDK, wallet, contractAddress, burnFromBulkTargets }: IBurnFromBulk) => {
+  return BurnFromBulk({ firmaSDK, wallet, contractAddress, burnFromBulkTargets });
+};
+
+export const mintBulk = ({ firmaSDK, wallet, contractAddress, mintBulkTargets }: IMintBulk) => {
+  return MintBulk({ firmaSDK, wallet, contractAddress, mintBulkTargets });
+};
