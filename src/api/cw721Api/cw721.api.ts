@@ -1,4 +1,4 @@
-import { IApprove, IApproveAll, IBurn, IGetAllNftIdList, IGetAllOperators, IGetApproval, IGetApprovals, IGetCw721ContractInfo, IGetCw721TokenInfo, IGetContractInfo, IGetExtension, IGetMinter, IGetNFTIdListOfOwner, IGetNftData, IGetNftTokenUri, IGetOwnerFromNftID, IGetOwnerShip, IGetTotalNfts, IInstantiateContract, IMint, IRevoke, IRevokeAll, ISendNft, IStoreCode, ITransfer, IUpdateOwnerShipAccept, IUpdateOwnerShipRenounce, IUpdateOwnerShipTransfer } from "interfaces/cw721"
+import { IApprove, IApproveAll, IBurn, IGetAllNftIdList, IGetAllOperators, IGetApproval, IGetApprovals, IGetCw721ContractInfo, IGetCw721TokenInfo, IGetContractInfo, IGetExtension, IGetMinter, IGetNFTIdListOfOwner, IGetNftData, IGetNftTokenUri, IGetOwnerFromNftID, IGetOwnerShip, IGetTotalNfts, IInstantiateContract, IMint, IRevoke, IRevokeAll, ISendNft, IStoreCode, ITransfer, IUpdateOwnerShipAccept, IUpdateOwnerShipRenounce, IUpdateOwnerShipTransfer, IMintBulk, IBurnBulk, ITransferBulk } from "interfaces/cw721"
 import { InstantiateContract } from "organisms/feature/cw721/tx/instantiateContract";
 import { Approve } from "organisms/feature/cw721/tx/approve";
 import { ApproveAll } from "organisms/feature/cw721/tx/approveAll";
@@ -12,6 +12,9 @@ import { Transfer } from "organisms/feature/cw721/tx/transfer";
 import { UpdateOwnerShipAccept } from "organisms/feature/cw721/tx/updateOwnerShipAccept";
 import { UpdateOwnerShipRenounce } from "organisms/feature/cw721/tx/updateOwnerShipRenounce";
 import { UpdateOwnerShipTransfer } from "organisms/feature/cw721/tx/updateOwnerShipTransfer";
+import { MintBulk } from "organisms/bulk/cw721/tx/mintBulk";
+import { BurnBulk } from "organisms/bulk/cw721/tx/burnBulk";
+import { TransferBulk } from "organisms/bulk/cw721/tx/transferBulk";
 
 export const storeCode = ({ firmaSDK, wallet, bufferArray, accessConfig }: IStoreCode) => {
   return StoreCode({ firmaSDK, wallet, bufferArray, accessConfig });
@@ -281,4 +284,17 @@ export const getOwnerShip = ({ firmaSDK, contractAddress }: IGetOwnerShip) => {
     }
   }
   return executeQuery();
+};
+
+// BULK TX
+export const mintBulk = ({ firmaSDK, wallet, contractAddress, mintBulkTargets }: IMintBulk) => {
+  return MintBulk({ firmaSDK, wallet, contractAddress, mintBulkTargets });
+};
+
+export const burnBulk = ({ firmaSDK, wallet, contractAddress, token_ids }: IBurnBulk) => {
+  return BurnBulk({ firmaSDK, wallet, contractAddress, token_ids });
+};
+
+export const transferBulk = ({ firmaSDK, wallet, contractAddress, transferBulkTargets }: ITransferBulk) => {
+  return TransferBulk({ firmaSDK, wallet, contractAddress, transferBulkTargets });
 };

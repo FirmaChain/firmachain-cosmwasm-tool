@@ -211,3 +211,36 @@ export interface IGetNftData {
   contractAddress: string;
   tokenId: string;
 };
+
+// BULK
+export interface IMintBulk {
+  firmaSDK: FirmaSDK | null;
+  wallet: FirmaWalletService | null;
+  contractAddress: string;
+  mintBulkTargets: IMintBulkTarget[];
+};
+
+export interface IMintBulkTarget {
+  owner: string;
+  token_id: string;
+  token_uri: string;
+};
+
+export interface IBurnBulk {
+  firmaSDK: FirmaSDK | null;
+  wallet: FirmaWalletService | null;
+  contractAddress: string;
+  token_ids: string[];
+};
+
+export interface ITransferBulk {
+  firmaSDK: FirmaSDK | null;
+  wallet: FirmaWalletService | null;
+  contractAddress: string;
+  transferBulkTargets: ITransferBulkTarget[];
+};
+
+export interface ITransferBulkTarget {
+  recipient: string;
+  token_id: string;
+};

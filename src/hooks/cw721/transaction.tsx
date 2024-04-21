@@ -3,6 +3,7 @@ import { AccessConfig, Expires, FirmaSDK, FirmaWalletService } from "@firmachain
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
 import { cw721API } from "api";
+import { IMintBulkTarget, ITransferBulkTarget } from "interfaces/cw721";
 
 const DEFAULT_MUTATION_OPTION: UseMutationOptions<any, Error, any, any> = {};
 
@@ -180,6 +181,43 @@ export const useSendNft = (
   option?: UseMutationOptions<Awaited<ReturnType<typeof cw721API.sendNft>>, Error>
 ) => {
   return useMutation(() => cw721API.sendNft({ firmaSDK, wallet, contractAddress, targetContractAddress, token_id, msg }), {
+    ...DEFAULT_MUTATION_OPTION,
+    ...option
+  });
+};
+
+// BULK TX
+export const useMintBulk = (
+  firmaSDK: FirmaSDK | null,
+  wallet: FirmaWalletService | null,
+  contractAddress: string,
+  option?: UseMutationOptions<Awaited<ReturnType<typeof cw721API.mintBulk>>, Error, IMintBulkTarget[]>
+) => {
+  return useMutation((mintBulkTargets) => cw721API.mintBulk({ firmaSDK, wallet, contractAddress, mintBulkTargets }), {
+    ...DEFAULT_MUTATION_OPTION,
+    ...option
+  });
+};
+
+export const useBurnBulk = (
+  firmaSDK: FirmaSDK | null,
+  wallet: FirmaWalletService | null,
+  contractAddress: string,
+  option?: UseMutationOptions<Awaited<ReturnType<typeof cw721API.burnBulk>>, Error, string[]>
+) => {
+  return useMutation((token_ids) => cw721API.burnBulk({ firmaSDK, wallet, contractAddress, token_ids }), {
+    ...DEFAULT_MUTATION_OPTION,
+    ...option
+  });
+};
+
+export const useTransferBulk = (
+  firmaSDK: FirmaSDK | null,
+  wallet: FirmaWalletService | null,
+  contractAddress: string,
+  option?: UseMutationOptions<Awaited<ReturnType<typeof cw721API.transferBulk>>, Error, ITransferBulkTarget[]>
+) => {
+  return useMutation((transferBulkTargets) => cw721API.transferBulk({ firmaSDK, wallet, contractAddress, transferBulkTargets }), {
     ...DEFAULT_MUTATION_OPTION,
     ...option
   });

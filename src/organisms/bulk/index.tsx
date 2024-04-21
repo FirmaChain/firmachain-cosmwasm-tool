@@ -5,6 +5,7 @@ import AccordionCard from "components/card/accordionCard";
 import { TABS } from "constants/common";
 
 import Cw20Bulk from "./cw20";
+import Cw721Bulk from "./cw721";
 
 const Bulk = () => {
   const { tab } = useSelector((state: rootState) => state.global);
@@ -12,6 +13,7 @@ const Bulk = () => {
   return (
     <AccordionCard title={"Bulk"} darkTitle={true}>
       {tab === TABS[0] && <Cw20Bulk />}
+      {tab === TABS[1] && <Cw721Bulk />}
     </AccordionCard>
   )
 }
