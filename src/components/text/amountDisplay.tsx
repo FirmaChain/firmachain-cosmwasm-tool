@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import { Fragment, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 interface IProps {
   label: string;
@@ -11,12 +11,8 @@ const AmountDisplay = ({ label, amount, symbol }: IProps) => {
   const hasDecimal = useMemo(() => {
     const check = Boolean(amount.includes("."));
 
-    return true;
+    return check;
   }, [amount]);
-
-  const testAmount1 = "123,456";
-  const testAmount2 = "123,456.998877";
-  const testSymbol = "FCT";
 
   return (
     <Stack direction={"row"} justifyContent={"space-between"} mt={"2px"}>
@@ -24,7 +20,7 @@ const AmountDisplay = ({ label, amount, symbol }: IProps) => {
       <Stack>
         {!hasDecimal ? 
           <Stack direction={"row"} sx={{ alignItems: "flex-end" }} gap={.5}>
-            <Typography sx={{ fontSize: "13px" }}>{testAmount1}</Typography>
+            <Typography sx={{ fontSize: "13px" }}>{amount}</Typography>
             <Typography sx={{ fontSize: "11px" }}>{symbol}</Typography>
           </Stack>
           :
