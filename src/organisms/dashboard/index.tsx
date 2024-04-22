@@ -18,6 +18,7 @@ const Dashboard = () => {
   const { address } = useFirmaSDK();
   const {
     Cw20ContractAddress,
+    Cw721ContractAddress,
   } = useSelector((state: rootState) => state.contract);
 
   const [tab, setTab] = useState<number>(0);
@@ -41,6 +42,7 @@ const Dashboard = () => {
           <Info
             address={address}
             cw20ContractAddress={Cw20ContractAddress}
+            cw721ContractAddress={Cw721ContractAddress}
           />
           <Tabs value={tab} onChange={onChangeClickTab}>
             {TABS.map((value, index) => {
