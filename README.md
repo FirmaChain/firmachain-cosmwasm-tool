@@ -1,6 +1,6 @@
 # firmachain-cosmwasm-tool
 
-![firmachain-cosmwasm-tool](https://github.com/FirmaChain/firmachain-cosmwasm-tool/assets/93503020/cfdabb32-f4d0-408f-8110-b6ffcf89b1f8)
+![firmachain-cosmwasm-tool](https://github.com/FirmaChain/firmachain-cosmwasm-tool/assets/93503020/2f57ffca-9e53-4cf8-a793-db5015eb4155)
 
 <br>
 
